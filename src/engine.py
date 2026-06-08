@@ -17,19 +17,10 @@ import os
 import random
 from typing import Dict, Optional
 
-import json
-import os
-import random
-from typing import Dict, Optional
-
 import numpy as np
 import torch
 from torch import nn
 from torch.utils.tensorboard import SummaryWriter
-from tqdm import tqdm
-import numpy as np
-import torch
-from torch import nn
 from tqdm import tqdm
 
 from .metrics import calculate_iou, calculate_dice

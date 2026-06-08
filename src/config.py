@@ -54,12 +54,11 @@ class Config:
     save_dir: str = "./models/unet_base"
     ckpt_prefix: str = "unet_base"
 
-    # ----- Khác -----
-    seed: int = 42
     # ----- Kiến trúc -----
     use_attention: bool = False               # nếu True, dùng AttentionBottleneck thay DoubleConvBlock
 
     # ----- Khác -----
+    seed: int = 42
     threshold: float = 0.5                      # ngưỡng nhị phân hoá khi tính metric
 
     @property
