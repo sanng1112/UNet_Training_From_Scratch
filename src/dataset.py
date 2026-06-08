@@ -81,6 +81,8 @@ class PersonStampPool:
     def sample(self):
         """Lấy ngẫu nhiên một (person_crop, person_mask) từ pool."""
         return random.choice(self.pool)
+
+
 class COCOPersonDataset(Dataset):
     """Dataset phân vùng người. Toàn bộ phép toán không gian xử lý trên NumPy/PIL
     để giảm ép kiểu, các phép Copy-Paste làm trực tiếp trên mảng nhị phân."""
@@ -229,6 +231,20 @@ def build_dataloaders(cfg) -> Tuple[DataLoader, DataLoader]:
         image_size=cfg.image_size, is_train=False,
     )
 
+    # Tạo PersonStampPool cho training (Copy-Paste nhanh hơn)
+    if train_ds.is_train:
+        stamp_pool = PersonStampPool(
+            coco=train_ds.coco,
+            img_dir=cfg.train_img_dir,
+            img_ids=train_ds.img_ids,
+            pool_size=500,
+            min_person_ratio=0.005,
+        )
+        train_ds.copy_paste_pool = stamp_pool
+        if len(stamp_pool.pool) > 0:
+            print(f"PersonStampPool: {len(stamp_pool.pool)} stamps sẵn sàng")
+
+    # Subset cho debug nhanh
     # Subset cho debug nhanh
     subset = getattr(cfg, 'subset', None)
     if subset is not None:

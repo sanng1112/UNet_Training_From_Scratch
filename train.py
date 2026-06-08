@@ -24,6 +24,10 @@ def parse_args() -> argparse.Namespace:
                    choices=["focal_dice", "bce_dice", "ohem_dice"])
     p.add_argument("--save-dir", type=str, default=None)
     p.add_argument("--no-amp", action="store_true", help="Tắt Mixed Precision")
+    p.add_argument("--save-dir", type=str, default=None)
+    p.add_argument("--no-amp", action="store_true", help="Tắt Mixed Precision")
+    p.add_argument("--resume", type=str, default=None, help="Đường dẫn checkpoint để train tiếp")
+    p.add_argument("--use-attention", action="store_true", help="Dùng AttentionBottleneck thay DoubleConvBlock")
     p.add_argument("--resume", type=str, default=None, help="Đường dẫn checkpoint để train tiếp")
     p.add_argument("--profile", action="store_true", help="Chạy benchmark dataloader & model")
     p.add_argument("--subset", type=int, default=None, help="Dùng N ảnh đầu để debug nhanh")
@@ -38,6 +42,10 @@ def build_config(args: argparse.Namespace) -> Config:
             setattr(cfg, key, val)
     if args.no_amp:
         cfg.amp = False
+    if args.subset is not None:
+        cfg.subset = args.subset
+    if args.use_attention:
+        cfg.use_attention = True
     if args.subset is not None:
         cfg.subset = args.subset
     return cfg
