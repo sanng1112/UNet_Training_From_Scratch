@@ -14,10 +14,10 @@ import torch
 @dataclass
 class Config:
     # ----- Dữ liệu -----
-    train_img_dir: str = "./data/COCO/train2017"
-    train_ann_file: str = "./data/COCO/annotations/instances_train2017.json"
-    val_img_dir: str = "./data/COCO/val2017"
-    val_ann_file: str = "./data/COCO/annotations/instances_val2017.json"
+    train_img_dir: str = "/mnt/f/Lenovo - DenP/Kì II - Năm 2/Seminar/dataset/train2017/train2017"
+    train_ann_file: str = "/mnt/f/Lenovo - DenP/Kì II - Năm 2/Seminar/dataset/annotations/instances_train2017.json"
+    val_img_dir: str = "/mnt/f/Lenovo - DenP/Kì II - Năm 2/Seminar/dataset/val2017/val2017"
+    val_ann_file: str = "/mnt/f/Lenovo - DenP/Kì II - Năm 2/Seminar/dataset/annotations/instances_val2017.json"
     image_size: Tuple[int, int] = (320, 320)
     copy_paste_prob: float = 0.5
 

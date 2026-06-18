@@ -112,7 +112,13 @@ class COCOPersonDataset(Dataset):
         """Đọc ảnh RGB + mask person (uint8) dưới dạng mảng NumPy."""
         img_id = self.img_ids[idx]
         img_info = self.coco.loadImgs(img_id)[0]
-        img_path = os.path.join(self.img_dir, img_info["file_name"])
+        
+        # Check if the image file is present locally in the workspace folder
+        local_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), img_info["file_name"])
+        if os.path.exists(local_path):
+            img_path = local_path
+        else:
+            img_path = os.path.join(self.img_dir, img_info["file_name"])
 
         image = np.array(Image.open(img_path).convert("RGB"))
         h, w = image.shape[:2]
